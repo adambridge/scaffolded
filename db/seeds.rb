@@ -7,3 +7,11 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+alice = Coach.create!(name: "Alice", phone: "001-456-7890")
+bob = Student.create!(name: "Bob", phone: "002-456-7890")
+chris = Coach.create!(name: "Chris", phone: "003-456-7890")
+diane = Student.create!(name: "Diane", phone: "004-456-7890")
+
+Call.create!(coach: alice, student: bob, start: Time.zone.now + 1.day)
+Call.create!(coach: chris, student: diane, start: Time.zone.now + 2.days)

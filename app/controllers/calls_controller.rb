@@ -3,7 +3,7 @@ class CallsController < ApplicationController
 
   # GET /calls or /calls.json
   def index
-    @calls = Call.all
+    @calls = current_user.calls.all
   end
 
   # GET /calls/1 or /calls/1.json
