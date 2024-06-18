@@ -1,0 +1,51 @@
+Scaffolded stepful:
+
+rails new scaffolded -d postgresql
+
+config/database.yml
+  username: stepful
+  password: stepful
+
+bin/rails db:create
+
+bin/rails s
+
+bin/rails g scaffold user name type phone
+bin/rails g scaffold student --parent=user
+bin/rails g scaffold coach --parent=user
+bin/rails g scaffold call coach_id student_id start:datetime satisfaction:integer notes:text
+
+bin/rails db:migrate
+
+bin/rails c
+Coach.create!(name: "Alice", phone: "001-456-7890")
+Student.create!(name: "Bob", phone: "002-456-7890")
+
+### Add relations ###
+
+class Call < ApplicationRecord
+  belongs_to :coach
+  belongs_to :student
+end
+
+class Coach < User
+  has_many :calls
+end
+
+class Student < User
+  has_many :calls
+end
+
+
+alice = Coach.first
+bob = Student.first
+Call.new(coach: alice, student: bob, start: Time.zone.now + 1.day)
+
+# Define root path
+config/routes.rb:
+  root "calls#index"
+
+
+copy user partial to student and coach
+
+bin/rails 
