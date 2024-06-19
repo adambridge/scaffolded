@@ -250,3 +250,51 @@ Also put index in coach subfolder
   end
 
 copy default templates into student folder too
+
+
+
+Calls provider and factory
+controller:
+  def index
+    if current_user
+      @calls = @calls_provider.all
+
+    def set_role
+      @calls_provider = CallsProviderFactory.for(current_user)
+
+in models:
+
+class CallsProviderFactory
+  TYPES = {
+    "Coach" => CoachCallsProvider,
+    "Student" => StudentCallsProvider
+  }
+
+  def self.for(user)
+    TYPES[user.type].new(user)
+  end
+end
+
+class CoachCallsProvider
+  def initialize(user)
+    @user = user
+  end
+
+  def all
+    @user.calls.all
+  end
+end
+
+class StudentCallsProvider
+  def initialize(user)
+    @user = user
+  end
+
+  def all
+    Call.where(student: nil).or(Call.where(student: @user))
+  end
+end
+
+
+Next: validate calls don't overlap
+
