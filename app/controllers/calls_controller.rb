@@ -1,10 +1,12 @@
 class CallsController < ApplicationController
   before_action :set_call, only: %i[ show edit update destroy ]
+  before_action :set_role
 
   # GET /calls or /calls.json
   def index
     if current_user
       @calls = current_user.calls.all
+      render "calls/#{@role}/index"
     else
       redirect_to login_path
     end
@@ -17,6 +19,7 @@ class CallsController < ApplicationController
   # GET /calls/new
   def new
     @call = Call.new
+    render "calls/#{@role}/new"
   end
 
   # GET /calls/1/edit
@@ -25,7 +28,8 @@ class CallsController < ApplicationController
 
   # POST /calls or /calls.json
   def create
-    @call = Call.new(call_params)
+    @call = Call.new(availability_params)
+    @call.coach = current_user
 
     respond_to do |format|
       if @call.save
@@ -70,5 +74,13 @@ class CallsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def call_params
       params.require(:call).permit(:coach_id, :student_id, :start, :satisfaction, :notes)
+    end
+
+    def availability_params
+      params.require(:call).permit(:start)
+    end
+
+    def set_role
+      @role ||= current_user && current_user.type == "Coach" ? :coach : :student
     end
 end
