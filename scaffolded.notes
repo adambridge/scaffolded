@@ -140,4 +140,113 @@ log out link
 route:
   get "logout" => "sessions#destroy"
 
+coach with no calls yet:
 
+emily = Coach.create!(name: "Emily", phone: "004-456-7890")
+
+Availability partial:
+<%= form_with(model: call) do |form| %>
+  <% if call.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(call.errors.count, "error") %> prohibited this call from being saved:</h2>
+
+      <ul>
+        <% call.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :start, style: "display: block" %>
+    <%= form.datetime_field :start %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+make belonging optional:   belongs_to :student, optional: true
+
+call creation:
+
+    @call = Call.new(availability_params)
+    @call.coach = current_user
+
+    def availability_params
+      params.require(:call).permit(:start)
+    end
+
+calls index:
+<% if current_user.type == "Coach" %>
+  <%= link_to "Add Availability", new_call_path %>
+<% end%>
+
+
+New call view
+<% if current_user.type == "Coach" %>
+  <h1>Add Availability</h1>
+
+  <%= render "availability", call: @call %>
+
+  <br>
+
+  <div>
+    <%= link_to "Back to calls", calls_path %>
+  </div>
+<% else %>
+  <h1>New call</h1>
+
+  <%= render "form", call: @call %>
+
+  <br>
+
+  <div>
+    <%= link_to "Back to calls", calls_path %>
+  </div>
+<% end %>
+
+
+coach call view views/calls/coach/new.html.erb:
+  <h1>Add Availability</h1>
+
+  <%= render "availability", call: @call %>
+
+  <br>
+
+  <div>
+    <%= link_to "Back to calls", calls_path %>
+  </div>
+
+calls controller:
+  before_action :set_role
+
+  # GET /calls/new
+  def new
+    @call = Call.new
+    render "calls/#{@role}/new"
+  end
+
+
+    def set_role
+      @role ||= current_user && current_user.type == "Coach" ? :coach : :student
+    end
+
+Make student optional on call:   belongs_to :student, optional: true
+  belongs_to :student, optional: true
+
+Also put index in coach subfolder
+
+  # GET /calls or /calls.json
+  def index
+    if current_user
+      @calls = current_user.calls.all
+      render "calls/#{@role}/index"
+    else
+      redirect_to login_path
+    end
+  end
+
+copy default templates into student folder too
