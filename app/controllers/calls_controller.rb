@@ -3,7 +3,11 @@ class CallsController < ApplicationController
 
   # GET /calls or /calls.json
   def index
-    @calls = current_user.calls.all
+    if current_user
+      @calls = current_user.calls.all
+    else
+      redirect_to login_path
+    end
   end
 
   # GET /calls/1 or /calls/1.json
