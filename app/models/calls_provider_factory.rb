@@ -5,6 +5,8 @@ class CallsProviderFactory
   }
 
   def self.for(user)
+    return unless user
+    
     TYPES[user.type].new(user)
   end
 end
