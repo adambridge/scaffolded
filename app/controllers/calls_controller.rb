@@ -7,7 +7,6 @@ class CallsController < ApplicationController
   def index
     if current_user
       @calls = @calls_provider.all
-      render "calls/#{@role}/index"
     else
       redirect_to login_path
     end
@@ -20,7 +19,6 @@ class CallsController < ApplicationController
   # GET /calls/new
   def new
     @call = Call.new
-    render "calls/#{@role}/new"
   end
 
   # GET /calls/1/edit
