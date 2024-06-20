@@ -1,27 +1,51 @@
-<div id="<%= dom_id call %>">
-  <p>
-    <strong>Coach:</strong>
-    <%= call.coach_id %>
-  </p>
-
+<% if coach? %>
+  <div id="<%= dom_id call %>">
   <p>
     <strong>Student:</strong>
-    <%= call.student_id %>
+    <%= call&.student&.name %>
   </p>
 
   <p>
+    <strong>Phone:</strong>
+    <%= call&.student&.phone %>
+  </p>
+
+  <p>
+  <p>
     <strong>Start:</strong>
-    <%= call.start %>
+    <%= call&.start %>
   </p>
 
   <p>
     <strong>Satisfaction:</strong>
-    <%= call.satisfaction %>
+    <%= call&.satisfaction %>
   </p>
 
   <p>
     <strong>Notes:</strong>
-    <%= call.notes %>
+    <%= call&.notes %>
   </p>
 
 </div>
+<% else %>
+  <div id="<%= dom_id call %>">
+  <p>
+    <strong>Coach:</strong>
+    <%= call&.coach&.name %>
+  </p>
+
+  <% if call&.student %>
+    <p>
+      <strong>Phone:</strong>
+      <%= call&.coach&.phone %>
+    </p>
+  <% end %>
+
+  <p>
+  <p>
+    <strong>Start:</strong>
+    <%= call&.start %>
+  </p>
+
+</div>
+<% end %>
