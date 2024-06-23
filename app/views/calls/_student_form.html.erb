@@ -1,0 +1,33 @@
+<%= render call %>
+
+<%= form_with(model: call) do |form| %>
+  <% if call.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(call.errors.count, "error") %> prohibited this call from being saved:</h2>
+
+      <ul>
+        <% call.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if call.student %>
+    <div>
+      <%= form.hidden_field :student_id, value: nil %>
+    </div>
+
+    <div>
+      <%= form.submit "Cancel Call" %>
+    </div>
+  <% else %>
+    <div>
+      <%= form.hidden_field :student_id, value: current_user.id %>
+    </div>
+
+    <div>
+      <%= form.submit "Book Call" %>
+    </div>
+  <% end %>
+<% end %>

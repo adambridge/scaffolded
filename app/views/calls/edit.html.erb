@@ -1,6 +1,10 @@
-<h1>Editing call</h1>
+<h1>Update call</h1>
 
-<%= render "form", call: @call %>
+<% if coach? %>
+<%= render "coach_form", call: @call %>
+<% else %>
+<%= render "student_form", call: @call %>
+<% end %>
 
 <br>
 
