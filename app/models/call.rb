@@ -5,6 +5,8 @@ class Call < ApplicationRecord
   validate :overlap
   validates :start, presence: true
 
+  nilify_blanks
+
   # Currently assumed that meetings are always 2 hours long
   DURATION = 2.hours
 
