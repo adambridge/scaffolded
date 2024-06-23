@@ -1,5 +1,25 @@
+<h1>Scheduled Calls</h1>
+
+<div id="calls">
+  <% @calls.select { |call| call.student }.each do |call| %>
+    <%= render call %>
+    <p>
+      <%= link_to "Show this call", call %>
+    </p>
+  <% end %>
+</div>
+
+<h1>Availability</h1>
+
+<div id="calls">
+  <% @calls.select { |call| !call.student }.each do |call| %>
+    <%= render call %>
+    <p>
+      <%= link_to "Show this call", call %>
+    </p>
+  <% end %>
+</div>
+
 <% if coach? %>
-  <%= render "index_coach" %>
-<% else %>
-  <%= render "index_student" %>
+<%= link_to "Add Availability", new_call_path %>
 <% end %>
