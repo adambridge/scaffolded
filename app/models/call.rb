@@ -15,7 +15,7 @@ class Call < ApplicationRecord
 
     finish = start + DURATION
     two_hours_before_start = start - DURATION
-    if !Call.where(coach: coach, start: two_hours_before_start..finish).empty?
+    if !Call.where(coach: coach, start: two_hours_before_start..finish).where.not(id: id).empty?
       errors.add(:start, " overlaps another meeting")
     end
   end
