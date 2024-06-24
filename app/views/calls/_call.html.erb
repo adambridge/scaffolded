@@ -1,5 +1,6 @@
 <% if coach? %>
   <div id="<%= dom_id call %>">
+  <% if call.student %>
   <p>
     <strong>Student:</strong>
     <%= call&.student&.name %>
@@ -9,6 +10,7 @@
     <strong>Phone:</strong>
     <%= call&.student&.phone %>
   </p>
+  <% end %>
 
   <p>
   <p>
