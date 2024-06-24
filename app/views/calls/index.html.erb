@@ -1,3 +1,15 @@
+
+<h1>Past Calls</h1>
+
+<div id="calls">
+  <% @calls.select { |call| call.start && call.start < Time.zone.now }.each do |call| %>
+    <%= render call %>
+    <p>
+      <%= link_to "Show this call", call %>
+    </p>
+  <% end %>
+</div>
+
 <h1>Scheduled Calls</h1>
 
 <div id="calls">
