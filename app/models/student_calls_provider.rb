@@ -3,19 +3,19 @@ class StudentCallsProvider
     @user = user
   end
 
-  def all
-    Call.where(student: nil).or(Call.where(student: @user))
+  def all(page)
+    Call.where(student: nil).or(Call.where(student: @user)).page(page).per(5)
   end
 
-  def available
-    Call.where(student: nil, start: Time.zone.now..)
+  def available(page)
+    Call.where(student: nil, start: Time.zone.now..).page(page).per(5)
   end
 
-  def scheduled
-    @user.calls.where(start: Time.zone.now..)
+  def scheduled(page)
+    @user.calls.where(start: Time.zone.now..).page(page).per(5)
   end
 
-  def past
-    @user.calls.where(start: ..Time.zone.now)
+  def past(page)
+    @user.calls.where(start: ..Time.zone.now).page(page).per(5)
   end
 end

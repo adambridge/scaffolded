@@ -6,19 +6,19 @@ class CallsController < ApplicationController
 
   # GET /calls or /calls.json
   def index
-    @calls = @calls_provider.all
+    @calls = @calls_provider.all(params[:page])
   end
 
   def past
-    @calls = @calls_provider.past
+    @calls = @calls_provider.past(params[:page])
   end
 
   def scheduled
-    @calls = @calls_provider.scheduled
+    @calls = @calls_provider.scheduled(params[:page])
   end
 
   def available
-    @calls = @calls_provider.available
+    @calls = @calls_provider.available(params[:page])
   end
 
   # GET /calls/1 or /calls/1.json
