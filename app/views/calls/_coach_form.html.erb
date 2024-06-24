@@ -11,10 +11,22 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :start, style: "display: block" %>
-    <%= form.datetime_field :start %>
-  </div>
+  <% if call.start && call.start < Time.zone.now %>
+    <div>
+      <%= form.label :rating, style: "display: block" %>
+      <%= form.number_field :rating %>
+    </div>
+
+    <div>
+      <%= form.label :notes, style: "display: block" %>
+      <%= form.text_area :notes %>
+    </div>
+  <% else %>
+    <div>
+      <%= form.label :start, style: "display: block" %>
+      <%= form.datetime_field :start %>
+    </div>
+  <% end %>
 
   <div>
     <%= form.submit %>
