@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "available" => "calls#available"
+  get "scheduled" => "calls#scheduled"
+  get "past" => "calls#past"
   get "login" => "sessions#new"
   get "logout" => "sessions#destroy"
   resources :calls
@@ -13,5 +16,5 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "calls#index"
+  root "calls#scheduled"
 end

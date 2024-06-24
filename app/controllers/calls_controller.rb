@@ -2,14 +2,23 @@
 class CallsController < ApplicationController
   before_action :set_call, only: %i[ show edit update destroy ]
   before_action :set_role
+  before_action :redirect_to_login
 
   # GET /calls or /calls.json
   def index
-    if current_user
-      @calls = @calls_provider.all
-    else
-      redirect_to login_path
-    end
+    @calls = @calls_provider.all
+  end
+
+  def past
+    @calls = @calls_provider.past
+  end
+
+  def scheduled
+    @calls = @calls_provider.scheduled
+  end
+
+  def available
+    @calls = @calls_provider.available
   end
 
   # GET /calls/1 or /calls/1.json
@@ -82,5 +91,9 @@ class CallsController < ApplicationController
     def set_role
       @calls_provider = CallsProviderFactory.for(current_user)
       @role ||= current_user && current_user.type == "Coach" ? :coach : :student
+    end
+
+    def redirect_to_login
+      redirect_to login_path unless current_user
     end
 end

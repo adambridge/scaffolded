@@ -12,8 +12,11 @@
 
   <body>
     <% if current_user %>
-    <%= "Logged in as #{current_user.name} | " %>
-    <%= link_to "log out", logout_path %>
+    <%= "Logged in as #{current_user.name}" %> |
+    <%= link_to "log out", logout_path %> |
+    <%= link_to "availability", available_path %> |
+    <%= link_to "scheduled calls", scheduled_path %> |
+    <%= link_to "past calls", past_path %> |
     <% else %>
     <%= link_to "log in", login_path %>
     <% end %>
