@@ -1,32 +1,35 @@
 <% if coach? %>
   <div id="<%= dom_id call %>">
   <% if call.student %>
-  <p>
-    <strong>Student:</strong>
-    <%= call&.student&.name %>
-  </p>
+    <p>
+      <strong>Student:</strong>
+      <%= call&.student&.name %>
+    </p>
 
-  <p>
-    <strong>Phone:</strong>
-    <%= call&.student&.phone %>
-  </p>
+    <p>
+      <strong>Phone:</strong>
+      <%= call&.student&.phone %>
+    </p>
   <% end %>
 
-  <p>
   <p>
     <strong>Start:</strong>
     <%= call&.start %>
   </p>
 
-  <p>
-    <strong>Satisfaction:</strong>
-    <%= call&.satisfaction %>
-  </p>
+  <% if call.satisfaction %>
+    <p>
+      <strong>Satisfaction:</strong>
+      <%= call&.satisfaction %>
+    </p>
+  <% end %>
 
-  <p>
-    <strong>Notes:</strong>
-    <%= call&.notes %>
-  </p>
+  <% if call.notes %>
+    <p>
+      <strong>Notes:</strong>
+      <%= call&.notes %>
+    </p>
+  <% end %>
 
 </div>
 <% else %>
@@ -43,7 +46,6 @@
     </p>
   <% end %>
 
-  <p>
   <p>
     <strong>Start:</strong>
     <%= call&.start %>
