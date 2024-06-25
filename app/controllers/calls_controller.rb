@@ -2,7 +2,7 @@ class CallsController < ApplicationController
   before_action :set_call, only: %i[ show edit update destroy ]
   before_action :set_role
   before_action :redirect_to_login
-  before_action :redirect_student, only: %i[ destroy ]
+  before_action :redirect_student, only: %i[ new destroy ]
 
   # GET /calls or /calls.json
   def index
