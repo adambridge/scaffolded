@@ -1,8 +1,8 @@
-
 class CallsController < ApplicationController
   before_action :set_call, only: %i[ show edit update destroy ]
   before_action :set_role
   before_action :redirect_to_login
+  before_action :redirect_student, only: %i[ destroy ]
 
   # GET /calls or /calls.json
   def index
@@ -74,26 +74,31 @@ class CallsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_call
-      @call = Call.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def call_params
-      params.require(:call).permit(:coach_id, :student_id, :start, :satisfaction, :notes)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_call
+    @call = Call.find(params[:id])
+  end
 
-    def availability_params
-      params.require(:call).permit(:start)
-    end
+  # Only allow a list of trusted parameters through.
+  def call_params
+    params.require(:call).permit(:coach_id, :student_id, :start, :satisfaction, :notes)
+  end
 
-    def set_role
-      @calls_provider = CallsProviderFactory.for(current_user)
-      @role ||= current_user && current_user.type == "Coach" ? :coach : :student
-    end
+  def availability_params
+    params.require(:call).permit(:start)
+  end
 
-    def redirect_to_login
-      redirect_to login_path unless current_user
-    end
+  def set_role
+    @calls_provider = CallsProviderFactory.for(current_user)
+    @role ||= current_user && current_user.type == "Coach" ? :coach : :student
+  end
+
+  def redirect_to_login
+    redirect_to login_path unless current_user
+  end
+
+  def redirect_student
+    redirect_to root_path unless coach?
+  end
 end

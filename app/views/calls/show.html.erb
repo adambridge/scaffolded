@@ -6,5 +6,7 @@
   <%= link_to "Edit this call", edit_call_path(@call) %> |
   <%= link_to "Back to calls", calls_path %>
 
+  <% if coach? %>
   <%= button_to "Destroy this call", @call, method: :delete %>
+  <% end %>
 </div>
