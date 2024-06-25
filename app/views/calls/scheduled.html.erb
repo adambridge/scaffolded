@@ -1,12 +1,3 @@
 <h1>Scheduled Calls</h1>
 
-<div id="calls">
-  <% @calls.each do |call| %>
-    <%= render call %>
-    <p>
-      <%= link_to "Show this call", call %>
-    </p>
-  <% end %>
-</div>
-
-<%= paginate @calls %>
+<%= render "call_list" %>

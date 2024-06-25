@@ -1,13 +1,6 @@
-
 <h1>All Calls</h1>
 
-<div id="calls">
-  <%= render @calls %>
-</div>
-
-<p>
-<%= paginate @calls %>
-</p>
+<%= render "call_list" %>
 
 <% if coach? %>
 <%= link_to "Add Availability", new_call_path %>
